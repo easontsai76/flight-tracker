@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Flight Tracker Map</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>✈️ Flight Tracker</h1>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <h3>Search Flight</h3>
+                <input 
+                    type="text" 
+                    id="flightSearch" 
+                    placeholder="Flight number (e.g., AA123)" 
+                    class="search-input"
+                    onkeypress="handleSearchEnter(event)"
+                >
+                <button class="btn btn-primary" onclick="searchFlight()">Search</button>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <h3>Filters</h3>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterAircraft" checked onchange="applyFilters()">
+                    Show Aircraft
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterAirports" checked onchange="applyFilters()">
+                    Show Airports
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterTrails" checked onchange="applyFilters()">
+                    Show Flight Trails
+                </label>
+            </div>
+
+            <!-- Active Flights List -->
+            <div class="flights-list">
+                <h3>Active Flights</h3>
+                <div id="flightsList" class="flights-container">
+                    <p class="loading">Loading flights...</p>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section">
+                <h3>Statistics</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Active Flights:</span>
+                    <span class="stat-value" id="statsFlights">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Aircraft:</span>
+                    <span class="stat-value" id="statsAircraft">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Avg Altitude:</span>
+                    <span class="stat-value" id="statsAltitude">0 ft</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Map -->
+            <div id="map" class="map"></div>
+
+            <!-- Flight Details Panel -->
+            <div id="detailsPanel" class="details-panel hidden">
+                <button class="close-btn" onclick="closeDetailsPanel()">✕</button>
+                <div id="detailsContent" class="details-content">
+                    <!-- Flight details will be populated here -->
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="map-controls">
+                <button class="control-btn" onclick="zoomIn()" title="Zoom In">+</button>
+                <button class="control-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+                <button class="control-btn" onclick="centerMap()" title="Center Map">📍</button>
+                <button class="control-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" class="loading-indicator hidden">
+                <div class="spinner"></div>
+                <p>Updating flight data...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
